@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:sizer/sizer.dart';
 import 'package:spotify_clone/constants/colors.dart';
 import 'package:spotify_clone/model/song_list.dart';
+
+import 'album.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -138,47 +141,59 @@ class _HomePageState extends State<HomePage> {
                                   padding: EdgeInsets.all(
                                     9.sp,
                                   ),
-                                  child: Column(
-                                    children: [
-                                      Container(
-                                        height: 16.h,
-                                        width: 40.w,
-                                        decoration: BoxDecoration(
-                                          image: DecorationImage(
-                                              image: AssetImage(
-                                                  songs[item]['img']),
-                                              fit: BoxFit.cover),
-                                          color: primary,
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        height: 1.h,
-                                      ),
-                                      Text(
-                                        songs[item]['title'],
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 15.sp,
-                                          fontWeight: FontWeight.w700,
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        height: 1.h,
-                                      ),
-                                      Container(
-                                        width: 35.w,
-                                        child: Text(
-                                          songs[item]['description'],
-                                          style: TextStyle(
-                                            color: Colors.grey,
-                                            fontSize: 12.sp,
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      Navigator.push(
+                                          context,
+                                          PageTransition(
+                                              alignment: Alignment.bottomCenter,
+                                              child: AlbumPage(
+                                                song: songs[item],
+                                              ),
+                                              type: PageTransitionType.scale));
+                                    },
+                                    child: Column(
+                                      children: [
+                                        Container(
+                                          height: 16.h,
+                                          width: 40.w,
+                                          decoration: BoxDecoration(
+                                            image: DecorationImage(
+                                                image: AssetImage(
+                                                    songs[item]['img']),
+                                                fit: BoxFit.cover),
+                                            color: primary,
+                                            borderRadius:
+                                                BorderRadius.circular(10),
                                           ),
-                                          maxLines: 2,
                                         ),
-                                      ),
-                                    ],
+                                        SizedBox(
+                                          height: 1.h,
+                                        ),
+                                        Text(
+                                          songs[item]['title'],
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 15.sp,
+                                            fontWeight: FontWeight.w700,
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          height: 1.h,
+                                        ),
+                                        Container(
+                                          width: 35.w,
+                                          child: Text(
+                                            songs[item]['description'],
+                                            style: TextStyle(
+                                              color: Colors.grey,
+                                              fontSize: 12.sp,
+                                            ),
+                                            maxLines: 2,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 );
                               },
@@ -208,47 +223,60 @@ class _HomePageState extends State<HomePage> {
                                   padding: EdgeInsets.all(
                                     9.sp,
                                   ),
-                                  child: Column(
-                                    children: [
-                                      Container(
-                                        height: 16.h,
-                                        width: 40.w,
-                                        decoration: BoxDecoration(
-                                          image: DecorationImage(
-                                              image: AssetImage(
-                                                  songs[item + 5]['img']),
-                                              fit: BoxFit.cover),
-                                          color: primary,
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        height: 1.h,
-                                      ),
-                                      Text(
-                                        songs[item + 5]['title'],
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 15.sp,
-                                          fontWeight: FontWeight.w700,
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        height: 1.h,
-                                      ),
-                                      Container(
-                                        width: 35.w,
-                                        child: Text(
-                                          songs[item + 5]['description'],
-                                          style: TextStyle(
-                                            color: Colors.grey,
-                                            fontSize: 12.sp,
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      Navigator.push(
+                                        context,
+                                        PageTransition(
+                                            alignment: Alignment.bottomCenter,
+                                            child: AlbumPage(
+                                              song: songs[item + 5],
+                                            ),
+                                            type: PageTransitionType.scale),
+                                      );
+                                    },
+                                    child: Column(
+                                      children: [
+                                        Container(
+                                          height: 16.h,
+                                          width: 40.w,
+                                          decoration: BoxDecoration(
+                                            image: DecorationImage(
+                                                image: AssetImage(
+                                                    songs[item + 5]['img']),
+                                                fit: BoxFit.cover),
+                                            color: primary,
+                                            borderRadius:
+                                                BorderRadius.circular(10),
                                           ),
-                                          maxLines: 2,
                                         ),
-                                      ),
-                                    ],
+                                        SizedBox(
+                                          height: 1.h,
+                                        ),
+                                        Text(
+                                          songs[item + 5]['title'],
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 15.sp,
+                                            fontWeight: FontWeight.w700,
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          height: 1.h,
+                                        ),
+                                        Container(
+                                          width: 35.w,
+                                          child: Text(
+                                            songs[item + 5]['description'],
+                                            style: TextStyle(
+                                              color: Colors.grey,
+                                              fontSize: 12.sp,
+                                            ),
+                                            maxLines: 2,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 );
                               },

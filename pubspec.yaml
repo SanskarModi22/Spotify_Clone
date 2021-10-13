@@ -39,6 +39,7 @@ dependencies:
   page_transition: ^2.0.4
   antdesign_icons: ^0.0.3
   flutter_vector_icons: ^1.0.0
+  audioplayers: ^0.20.1
 
 dev_dependencies:
   flutter_test:

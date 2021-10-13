@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:antdesign_icons/antdesign_icons.dart';
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -26,6 +29,47 @@ class MusicDetail extends StatefulWidget {
 
 class _MusicDetailState extends State<MusicDetail> {
   double _current = 20.0;
+  AudioPlayer? advancedPlayer;
+  AudioCache? audioCache;
+  bool isPlaying = true;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    initPlayer();
+  }
+
+  initPlayer() {
+    advancedPlayer = new AudioPlayer();
+    audioCache = new AudioCache(fixedPlayer: advancedPlayer);
+    playSound(widget.songUrl!);
+  }
+
+  playSound(localPath) async {
+    await audioCache!.play(localPath);
+  }
+
+  stopSound(localPath) async {
+    Uri file = await audioCache!.load(localPath);
+    await advancedPlayer!.setUrl(file.path);
+    advancedPlayer!.stop();
+  }
+
+  seekSound() async {
+    Uri file = await audioCache!.load(widget.songUrl!);
+    await advancedPlayer!.setUrl(file.path);
+    advancedPlayer!.seek(
+      Duration(seconds: 5),
+    );
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    stopSound(widget.songUrl);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -161,6 +205,7 @@ class _MusicDetailState extends State<MusicDetail> {
                 setState(() {
                   _current = value;
                 });
+                seekSound();
               },
             ),
             SizedBox(
@@ -211,15 +256,31 @@ class _MusicDetailState extends State<MusicDetail> {
                   ),
                 ),
                 IconButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      if (!isPlaying) {
+                        stopSound(widget.songUrl);
+                        setState(() {
+                          isPlaying = false;
+                        });
+                      } else {
+                        playSound(widget.songUrl);
+                        setState(() {
+                          isPlaying = true;
+                        });
+                      }
+                    },
                     iconSize: 38.sp,
                     icon: Container(
-                      decoration:
-                          BoxDecoration(color: primary, shape: BoxShape.circle),
+                      decoration: BoxDecoration(
+                        color: primary,
+                        shape: BoxShape.circle,
+                      ),
                       child: Center(
                         child: Icon(
-                          Entypo.controller_stop,
-                          size: 32.sp,
+                          isPlaying
+                              ? Entypo.controller_stop
+                              : Entypo.controller_play,
+                          size: 30.sp,
                           color: Colors.white,
                         ),
                       ),

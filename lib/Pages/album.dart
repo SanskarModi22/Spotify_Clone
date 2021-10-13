@@ -5,6 +5,8 @@ import 'package:sizer/sizer.dart';
 import 'package:spotify_clone/constants/colors.dart';
 import 'package:spotify_clone/model/song_list.dart';
 
+import 'music_detail.dart';
+
 class AlbumPage extends StatefulWidget {
   const AlbumPage({Key? key, this.song}) : super(key: key);
   final dynamic song;
@@ -83,13 +85,18 @@ class _AlbumPageState extends State<AlbumPage> {
                         child: GestureDetector(
                           onTap: () {
                             Navigator.push(
-                                context,
-                                PageTransition(
-                                    alignment: Alignment.bottomCenter,
-                                    child: AlbumPage(
-                                      song: songs[item],
-                                    ),
-                                    type: PageTransitionType.scale));
+                              context,
+                              PageTransition(
+                                  alignment: Alignment.bottomCenter,
+                                  child: MusicDetail(
+                                    title: songs[item]['title'],
+                                    color: songs[item]['color'],
+                                    description: songs[item]['description'],
+                                    img: songs[item]['img'],
+                                    songUrl: songs[item]['song_url'],
+                                  ),
+                                  type: PageTransitionType.scale),
+                            );
                           },
                           child: Column(
                             children: [
@@ -98,8 +105,9 @@ class _AlbumPageState extends State<AlbumPage> {
                                 width: 40.w,
                                 decoration: BoxDecoration(
                                   image: DecorationImage(
-                                      image: AssetImage(songs[item]['img']),
-                                      fit: BoxFit.cover),
+                                    image: AssetImage(songs[item]['img']),
+                                    fit: BoxFit.cover,
+                                  ),
                                   color: primary,
                                   borderRadius: BorderRadius.circular(10),
                                 ),
@@ -163,55 +171,73 @@ class _AlbumPageState extends State<AlbumPage> {
                         scrollDirection: Axis.vertical,
                         itemCount: songSelected.length,
                         itemBuilder: (ctx, item) {
-                          return Padding(
-                            padding: EdgeInsets.fromLTRB(
-                              10.sp,
-                              10.sp,
-                              5.sp,
-                              10.sp,
-                            ),
-                            child: Row(
-                              children: [
-                                Container(
-                                  width: 60.w,
-                                  child: Text(
-                                    "${item + 1}. ${songSelected[item]["title"]}",
-                                    style: TextStyle(
-                                        fontSize: 17.sp, color: Colors.white),
+                          return GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                PageTransition(
+                                  alignment: Alignment.bottomCenter,
+                                  child: MusicDetail(
+                                    title: songs[item]['title'],
+                                    color: songs[item]['color'],
+                                    description: songs[item]['description'],
+                                    img: songs[item]['img'],
+                                    songUrl: songs[item]['song_url'],
                                   ),
+                                  type: PageTransitionType.scale,
                                 ),
-                                Container(
-                                  width: 35.w,
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Container(
-                                        width: 15.w,
-                                        height: 3.h,
-                                        child: Text(
-                                          songSelected[item]["duration"],
-                                          style: TextStyle(
-                                            color: Colors.white54,
-                                            fontSize: 14.sp,
+                              );
+                            },
+                            child: Padding(
+                              padding: EdgeInsets.fromLTRB(
+                                10.sp,
+                                10.sp,
+                                5.sp,
+                                10.sp,
+                              ),
+                              child: Row(
+                                children: [
+                                  Container(
+                                    width: 60.w,
+                                    child: Text(
+                                      "${item + 1}. ${songSelected[item]["title"]}",
+                                      style: TextStyle(
+                                          fontSize: 17.sp, color: Colors.white),
+                                    ),
+                                  ),
+                                  Container(
+                                    width: 35.w,
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Container(
+                                          width: 15.w,
+                                          height: 3.h,
+                                          child: Text(
+                                            songSelected[item]["duration"],
+                                            style: TextStyle(
+                                              color: Colors.white54,
+                                              fontSize: 14.sp,
+                                            ),
                                           ),
                                         ),
-                                      ),
-                                      Container(
-                                        width: 15.w,
-                                        height: 3.h,
-                                        decoration: BoxDecoration(
-                                          shape: BoxShape.circle,
-                                          color: Colors.grey.withOpacity(0.9),
-                                        ),
-                                        child: Icon(
-                                          Icons.play_arrow,
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                )
-                              ],
+                                        Container(
+                                          width: 15.w,
+                                          height: 3.h,
+                                          decoration: BoxDecoration(
+                                            shape: BoxShape.circle,
+                                            color: Colors.grey.withOpacity(0.9),
+                                          ),
+                                          child: Icon(
+                                            Icons.play_arrow,
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                  )
+                                ],
+                              ),
                             ),
                           );
                         },
